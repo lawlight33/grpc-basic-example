@@ -1,4 +1,4 @@
-package org.example.grpcbase;
+package org.example.grpcbase.client;
 
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
@@ -9,7 +9,7 @@ import org.example.grpc.base.HelloServiceGrpc;
 public class GrpcClient {
 
     public static void main(String[] args) {
-        ManagedChannel channel = ManagedChannelBuilder.forAddress("localhost", 8080)
+        ManagedChannel channel = ManagedChannelBuilder.forAddress("localhost", 8081)
                 .usePlaintext()
                 .build();
 

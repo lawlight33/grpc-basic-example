@@ -1,4 +1,4 @@
-package org.example.grpcbase;
+package org.example.grpcbase.server;
 
 import io.grpc.stub.StreamObserver;
 import org.example.grpc.base.HelloRequest;
