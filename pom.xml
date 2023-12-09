@@ -10,19 +10,24 @@
 
   <dependencies>
     <dependency>
+      <groupId>javax.annotation</groupId>
+      <artifactId>javax.annotation-api</artifactId>
+      <version>1.3.2</version>
+    </dependency>
+    <dependency>
       <groupId>io.grpc</groupId>
       <artifactId>grpc-netty</artifactId>
-      <version>1.16.1</version>
+      <version>1.60.0</version>
     </dependency>
     <dependency>
       <groupId>io.grpc</groupId>
       <artifactId>grpc-protobuf</artifactId>
-      <version>1.16.1</version>
+      <version>1.60.0</version>
     </dependency>
     <dependency>
       <groupId>io.grpc</groupId>
       <artifactId>grpc-stub</artifactId>
-      <version>1.16.1</version>
+      <version>1.60.0</version>
     </dependency>
   </dependencies>
 
@@ -41,11 +46,11 @@
         <version>0.6.1</version>
         <configuration>
           <protocArtifact>
-            com.google.protobuf:protoc:3.3.0:exe:${os.detected.classifier}
+            com.google.protobuf:protoc:3.24.0:exe:${os.detected.classifier}
           </protocArtifact>
           <pluginId>grpc-java</pluginId>
           <pluginArtifact>
-            io.grpc:protoc-gen-grpc-java:1.4.0:exe:${os.detected.classifier}
+            io.grpc:protoc-gen-grpc-java:1.60.0:exe:${os.detected.classifier}
           </pluginArtifact>
         </configuration>
         <executions>
@@ -61,9 +66,52 @@
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
         <configuration>
-          <source>6</source>
-          <target>6</target>
+          <source>21</source>
+          <target>21</target>
         </configuration>
+      </plugin>
+      <plugin>
+        <artifactId>maven-assembly-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>make-server-jar</id> <!-- This is used for inheritance merges -->
+            <phase>package</phase> <!-- Bind to the packaging phase -->
+            <goals>
+              <goal>single</goal>
+            </goals>
+            <configuration>
+              <finalName>grpc-client</finalName>
+              <archive>
+                <manifest>
+                  <mainClass>org.example.grpcbase.client.GrpcClient</mainClass>
+                </manifest>
+              </archive>
+              <descriptorRefs>
+                <descriptorRef>jar-with-dependencies</descriptorRef>
+              </descriptorRefs>
+              <appendAssemblyId>false</appendAssemblyId>
+            </configuration>
+          </execution>
+          <execution>
+            <id>make-client-jar</id> <!-- This is used for inheritance merges -->
+            <phase>package</phase> <!-- Bind to the packaging phase -->
+            <goals>
+              <goal>single</goal>
+            </goals>
+            <configuration>
+              <finalName>grpc-server</finalName>
+              <archive>
+                <manifest>
+                  <mainClass>org.example.grpcbase.server.GrpcServer</mainClass>
+                </manifest>
+              </archive>
+              <descriptorRefs>
+                <descriptorRef>jar-with-dependencies</descriptorRef>
+              </descriptorRefs>
+              <appendAssemblyId>false</appendAssemblyId>
+            </configuration>
+          </execution>
+        </executions>
       </plugin>
     </plugins>
   </build>
